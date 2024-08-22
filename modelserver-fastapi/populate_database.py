@@ -113,10 +113,10 @@ def main():
         clear_database()
 
     # Create (or update) the data store.
-    documents = load_documents()
-    chunks = split_documents(documents)
-    add_to_chroma(chunks)
-    
+    # documents = load_documents()
+    # chunks = split_documents(documents)
+    # add_to_chroma(chunks)
+
     documents2 = load_documents_from_data()
     chunks2 = split_documents(documents2)
     add_to_chroma(chunks2)

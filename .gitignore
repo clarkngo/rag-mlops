@@ -73,7 +73,6 @@ dmypy.json
 cython_debug/
 
 # Data & logs
-data/
 logs/
 *.log
 
