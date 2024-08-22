@@ -11,3 +11,4 @@ httpx
 langchain
 chromadb==0.3.29
 langchain_community
+pypdf

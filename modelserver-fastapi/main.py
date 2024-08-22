@@ -18,6 +18,8 @@ from langchain_community.vectorstores import Chroma
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.llms.ollama import Ollama
 from langchain_community.embeddings.ollama import OllamaEmbeddings
+from langchain.document_loaders.pdf import PyPDFDirectoryLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 EXPRESSJS_URL = "http://127.0.0.1:3000"
 OLLAMA_URL = "http://127.0.0.1:11434"
@@ -37,6 +39,7 @@ model_uri = f"models:/{MODEL_NAME}/{MODEL_VERSION}"
 model = mlflow.pyfunc.load_model(model_uri=model_uri)
 
 
+DATA_PATH = "data"
 CHROMA_PATH = "chroma"
 PROMPT_TEMPLATE = """
 Answer the question based only on the following context:

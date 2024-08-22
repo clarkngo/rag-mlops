@@ -5,11 +5,13 @@ from langchain_community.embeddings.ollama import OllamaEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.schema.document import Document
 from langchain_community.vectorstores import Chroma
+from langchain_community.document_loaders import PyPDFDirectoryLoader
 
 import requests
 import pymongo
 
 CHROMA_PATH = "chroma"
+DATA_PATH = "data"
 
 def get_embedding_function():
     embeddings = OllamaEmbeddings(model="gemma2:2b")
@@ -27,6 +29,11 @@ def load_documents():
             documents.append(Document(page_content=text, metadata={'movie_id': movie['_id']}))
 
     return documents
+
+    
+def load_documents_from_data():
+    document_loader = PyPDFDirectoryLoader(DATA_PATH)
+    return document_loader.load()
 
 def split_documents(documents: list[Document]):
     text_splitter = RecursiveCharacterTextSplitter(
@@ -109,6 +116,10 @@ def main():
     documents = load_documents()
     chunks = split_documents(documents)
     add_to_chroma(chunks)
+    
+    documents2 = load_documents_from_data()
+    chunks2 = split_documents(documents2)
+    add_to_chroma(chunks2)
 
 if __name__ == "__main__":
     main()
