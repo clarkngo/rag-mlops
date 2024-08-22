@@ -1,23 +1,103 @@
+# DIT637-TT09
 
- #  DIT 620 IT Innovation 
+## Run Ollama Server
+1. Open New Terminal
+2. `curl -fsSL https://ollama.com/install.sh | sh`
+3. `ollama serve`
 
-### TT 10
+## Pull and Chat with a Large Language Model (LLM) Conversational AI
+1. Open New Terminal
+2. `ollama pull gemma2:2b`
+3. `ollama run gemma2:2b`
+4. Type anything in the prompt to test
+5. Press CTRL + D to Exit
 
+## Run Backend ExpressJS DB server (Application Server)
+1. Copy your MongoDB Connection String from MongoDB Atlas
+2. Create `.env` file and paste it after `MONGODB_URI=` (use `example.env` as reference)
+3. Open New Terminal
+4. `cd backend-expressjs`
+5. `npm install`
+7. `npm run start`
+8. Make the Port Visibility `Public`
+9. Copy the forwarded address ExpressJS
 
-Please follow the instructions on the [CityU STC Student Worker Center Github.io page](https://cityuseattle.github.io/) to set up your computer for completing TT assignments. 
+## Run Machine Learning Operations (MLOps) Tracking Server
+1. Open New Terminal
+2. `cd mlops-mlflow`
+3. `pip install -r requirements`
+4. `mlflow server`
 
-1. Before starting this assignment, you should have followed the instructions under the Git section to Install Git, Create a GitHub Account, and Install GitHub Desktop (optional). If you missed any of these sections, please check the guide [here](https://cityuseattle.github.io/docs/git).
+## Run Machine Learning Models
+1. `cd mlops-mlflow`
+2. `python run_all_models.py`
 
-2. It is important to store your TT assignments in a location you will remember and that make sense to you. For our recommendation, check the [Organize TT page](https://cityuseattle.github.io/docs/hoporhos/organization/).
+Note: It will run the following Python scripts
+- model_lr is Linear Regression
+- model_nn is Neural Network
+- model_gb is Gradient Boost
+- model_rf is Random Forest
 
-3. Once you have a place to store your work, you will need to clone this repository. For instructions on how to do so, check the Clone or Download section on the [Guide TT page](https://cityuseattle.github.io/docs/hoporhos/guide/).
+## Run Python Script to create ChromaDB and Insert Data and Run ML Model (Recommender Server)
+1. Open New Terminal
+2. `cd modelserver-fastapi`
+3. `pip install -r requirements.txt`
+4. `python populate_database.py`
+5. `uvicorn main:app --reload`
 
-4. You should see some word document(s) or pdf file(s) inside the repository. Follow the instructions and complete your work. 
+## Run Frontend React Native in the Mobile/Browser
+1. Copy your ExpressJS Forwarded Address
+2. Create `.env` file and paste it after `API_URL=` following: (use `example.env` as reference)
+2. Open New Terminal
+3. `cd frontend-reactnative`
+4. `npm install`
+6. `npx expo start --web`
 
-<strong>SUBMIT YOUR WORK </strong>
+## EXTRA: Test Ollama Server using curl command
+1. New Terminal
+2. Copy paste the following:
 
-Once you have completed the Technology Tool, you will need to push your work to GitHub.
+### Test Generate Response
+```
+curl http://localhost:11434/api/generate -d '{
+  "model": "gemma2:2b",
+  "prompt":"Why is the sky blue?"
+}'
+```
+## Test Chat
+```
+curl -X POST http://localhost:11434/api/chat \
+     -H "Content-Type: application/json" \
+     -d '{
+           "model": "gemma2:2b",
+           "messages": [
+               { "role": "user", "content": "limit 50 words. please recommed horror movies" }
+           ]
+         }'
+```
 
-Follow the instructions on the [Submit your work page](https://cityuseattle.github.io/docs/hoporhos/submit/) to do so.
+### Test ExpressJS Server wrapping Ollama Server
+```
+curl -X POST http://localhost:3000/chat \
+     -H "Content-Type: application/json" \
+     -d '{
+           "model": "gemma2:2b",
+           "messages": [
+               { "role": "user", "content": "limit 25 words. please recommed horror movies" }
+           ]
+         }'
+```
 
+### Test FastAPI RAG
+```
+curl -X POST "http://127.0.0.1:8000/chat" \
+-H "Content-Type: application/json" \
+-d '{"query_text": "What are the health benefits of green tea?"}'
+```
 
+### Test ExpressJS Wrapper FastAPI RAG
+```
+curl -X POST "http://127.0.0.1:3000/chat" \
+-H "Content-Type: application/json" \
+-d '{"query_text": "What are the health benefits of green tea?"}'
+```
