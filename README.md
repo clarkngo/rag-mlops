@@ -1,4 +1,4 @@
-# DIT637-TT09
+# DIT637-TT10
 
 ## Run Ollama Server
 1. Open New Terminal
