@@ -6,18 +6,20 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.schema.document import Document
 from langchain_community.vectorstores import Chroma
 from langchain_community.document_loaders import PyPDFDirectoryLoader
+from langchain_community.document_loaders import PyPDFDirectoryLoader
 
 import requests
 import pymongo
 
 CHROMA_PATH = "chroma"
 DATA_PATH = "data"
+DATA_PATH = "data"
 
 def get_embedding_function():
     embeddings = OllamaEmbeddings(model="gemma2:2b")
     return embeddings
 
-def load_documents():
+def load_documents_from_database():
     response = requests.get('http://127.0.0.1:3000/movies-sample')
     movies = response.json() 
 
@@ -30,8 +32,7 @@ def load_documents():
 
     return documents
 
-    
-def load_documents_from_data():
+def load_documents_from_data_folder():
     document_loader = PyPDFDirectoryLoader(DATA_PATH)
     return document_loader.load()
 
@@ -113,13 +114,10 @@ def main():
         clear_database()
 
     # Create (or update) the data store.
-    # documents = load_documents()
-    # chunks = split_documents(documents)
-    # add_to_chroma(chunks)
-
-    documents2 = load_documents_from_data()
-    chunks2 = split_documents(documents2)
-    add_to_chroma(chunks2)
+    # documents = load_documents_from_database()
+    documents = load_documents_from_data_folder()
+    chunks = split_documents(documents)
+    add_to_chroma(chunks)
 
 if __name__ == "__main__":
     main()
