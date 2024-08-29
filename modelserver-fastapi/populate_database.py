@@ -13,7 +13,6 @@ import pymongo
 
 CHROMA_PATH = "chroma"
 DATA_PATH = "data"
-DATA_PATH = "data"
 
 def get_embedding_function():
     embeddings = OllamaEmbeddings(model="gemma2:2b")
