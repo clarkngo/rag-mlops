@@ -1,4 +1,4 @@
-# DIT637-TT10
+# RAG-MLOPS
 
 ## Run Ollama Server
 1. Open New Terminal
