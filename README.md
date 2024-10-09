@@ -1,5 +1,8 @@
 # RAG-MLOPS
 
+## Setup MongoDB Atlas
+1. Follow MONGODB SETUP.pdf document
+
 ## Run Ollama Server
 1. Open New Terminal
 2. `curl -fsSL https://ollama.com/install.sh | sh`
